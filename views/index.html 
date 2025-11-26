@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Notas Web</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 600px; margin: auto; }
+    .nota { padding: 10px; border: 1px solid #ccc; margin-top: 10px; }
+    @media(max-width: 600px){
+      body { background: #f0f0f0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Mis Notas Web</h1>
+
+  <form action="/agregar" method="POST">
+      <input type="text" name="nota" placeholder="Escribe tu nota" required>
+      <button type="submit">Guardar</button>
+  </form>
+
+  <h2>Notas guardadas</h2>
+  <div id="notas"></div>
+
+  <h2>Video desde la nube</h2>
+  <iframe width="100%" height="250" src="https://www.youtube.com/watch?v=fzzUlf5JWM8&list=RDfzzUlf5JWM8&start_radio=1"></iframe>
+
+  <script>
+    fetch('/notas')
+      .then(res => res.json())
+      .then(data => {
+        let cont = document.getElementById("notas");
+        data.forEach(n => {
+          let div = document.createElement("div");
+          div.className = "nota";
+          div.innerText = n.texto;
+          cont.appendChild(div);
+        });
+      });
+  </script>
+</body>
+</html>
